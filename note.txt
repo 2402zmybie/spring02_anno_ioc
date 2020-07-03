@@ -1,0 +1,30 @@
+曾经的XML配置:
+<bean id="accountService" class="com.hr.service.impl.AccountServiceImpl"
+        scope="" init-method="" destory-method="">
+        <property name="" value="" | ref=""></property>
+</bean>
+
+全部用注解实现, 那么:
+    1 用于创建对象的
+        他们的作用就和在xml中写一个<bean>标签实现的功能是一样的
+        @Component: 用于把当前类对象存入spring容器中
+        @Controller
+        @Service
+        @Repository
+    2 用于注入数据
+        <property>
+        @Autowired:
+            作用: 自动按照类型注入,只要容器中有唯一一个bean对象类型和要注入的变量类型匹配,就可以注入成功
+                  如果ioc容器中没有任何bean的类型和要注入的变量类型匹配,则报错
+                  如果ioc容器中有多个类型匹配时候, 则要和@Qualifier一起使用, 按照变量名和id 进行注入
+        @Qualifier 用在变量上需要和Autowired一起使用 (在按照类中注入的基础上再按照名称注入,它在给类成员注入时不能单独使用)
+        @Resource: 直接按照bean的id注入,它可以独立使用. 属性: name, 用于指定bean的id
+        @Value: 用于注入基本类型和String类型的数据, Value可以使用SpEL表达式, SpEL写法: ${表达式}
+        @Bean
+    3 改变作用范围
+        <scope>:
+            @Scope("prototype")  //多例的
+            @Scope("singleton")  //单例的 默认值
+    4 生命周期 (了解)
+        <init-method> : PostConstruct : 指定初始化方法
+        <destory-method> : PreDestory: 指定销毁方法
